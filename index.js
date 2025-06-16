@@ -29,5 +29,5 @@ app.post('/marcar', async (req, res) => {
 
 app.get('/', (_, res) => res.send('API rodando ✔️'));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => console.log('API online na porta ' + port));
