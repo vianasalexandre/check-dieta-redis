@@ -17,7 +17,7 @@ app.get('/verificar', async (req, res) => {
   const { telefone } = req.query;
   if (!telefone) return res.status(400).json({ erro: 'Telefone é obrigatório' });
 
-  const data = await redis.get('appmax_data:' + telefone);
+  const data = await redis.get('dieta_entregue:' + telefone);
   return res.json({ ja_recebeu: !!data });
 });
 
@@ -25,7 +25,7 @@ app.post('/marcar', async (req, res) => {
   const { telefone } = req.body;
   if (!telefone) return res.status(400).json({ erro: 'Telefone é obrigatório' });
 
-  await redis.set('appmax_data:' + telefone, 'true', 'EX', TTL);
+  await redis.set('dieta_entregue:' + telefone, 'true', 'EX', TTL);
   return res.json({ status: 'ok' });
 });
 
