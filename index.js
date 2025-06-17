@@ -14,10 +14,17 @@ const redis = new Redis(process.env.REDIS_URL);
 const TTL = 60 * 60 * 24 * 365; // 1 ano
 
 app.get('/verificar', async (req, res) => {
-  const { telefone } = req.query;
-  if (!telefone) return res.status(400).json({ erro: 'Telefone é obrigatório' });
+  const { telefone, email } = req.query;
 
-  const data = await redis.get('dieta_entregue:' + telefone);
+  if (!telefone && !email) {
+    return res.status(400).json({ erro: 'Telefone ou email é obrigatório' });
+  }
+
+  const chave = telefone
+    ? 'dieta_entregue:' + telefone
+    : 'cliente:' + email;
+
+  const data = await redis.get(chave);
   return res.json({ ja_recebeu: !!data });
 });
 
