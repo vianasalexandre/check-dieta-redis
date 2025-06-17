@@ -31,5 +31,5 @@ app.post('/marcar', async (req, res) => {
 app.get('/', (_, res) => res.send('API rodando ✔️'));
 
 // fallback da porta para evitar erro 502
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 app.listen(port, () => console.log('API online na porta ' + port));
